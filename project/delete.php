@@ -1,20 +1,22 @@
 <?php
-    include 'condb.php';
-    var_dump($_GET);
-    //print_r($_POST);
+include '../condb.php';
 
-    $id = $_GET['id'];
+$_POST = json_decode(file_get_contents('php://input'), true);
 
-    $sql = "DELETE FROM projects WHERE id = $id";
+$id = $_POST['id'];
+
+$sql = "DELETE FROM projects WHERE id = $id";
 
 
-$result = mysqli_query($condb, $sql) or die("Error in sql: $sql".mysqli_error($sql));
+$result = mysqli_query($condb, $sql) or die("Error in sql: $sql" . mysqli_error($condb));
 mysqli_close($condb);
 
-if($result){
-    echo "Delete Successfully.";
-    header("Location: list.php");
-}else{
-    echo 'Error!!';
+header("Access-Control-Allow-Origin: *");
+
+if ($result) {
+  echo "Delete Successfully.";
+  http_response_code(200);
+} else {
+  echo 'Error!!';
+  http_response_code(400);
 }
-?>

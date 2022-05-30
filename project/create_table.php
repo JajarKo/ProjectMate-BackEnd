@@ -1,12 +1,7 @@
 <?php
-$servername = "localhost";
-$username = "natcha";
-$password = "123456";
-$dbname = "mydb";
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-// Check connection
-if (!$conn) {
+include '../condb.php';
+
+if (!$condb) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
@@ -23,11 +18,10 @@ $sql = "CREATE TABLE projects (
     project_password VARCHAR(200) NOT NULL
     )";
 
-if (mysqli_query($conn, $sql)) {
+if (mysqli_query($condb, $sql)) {
   echo "Table projects created successfully";
 } else {
-  echo "Error creating table: " . mysqli_error($conn);
+  echo "Error creating table: " . mysqli_error($condb);
 }
 
-mysqli_close($conn);
-?>
+mysqli_close($condb);
